@@ -1,6 +1,5 @@
 (function(){
 	"use strict";
-
 	var root = this,
 		Chart = root.Chart,
 		helpers = Chart.helpers;
@@ -96,6 +95,7 @@
 			helpers.each(data.datasets,function(dataset){
 
 				var datasetObject = {
+          previousPeriodData: dataset.previousPeriodData || null,
 					label : dataset.label || null,
 					fillColor : dataset.fillColor,
 					strokeColor : dataset.strokeColor,
