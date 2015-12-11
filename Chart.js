@@ -2804,13 +2804,13 @@
 				}
 			});
 
-      that.hasCumulativeValues = data.hasCumulativeValues;
-      that.previousPeriodData = data.previousPeriodData;
-      that.datasets = [];
+      this.hasCumulativeData = data.hasCumulativeData;
+      this.previousPeriodData = data.previousPeriodData;
+      this.datasets = [];
 
-      that.datasetTotal = function(dataset) {
+      this.datasetTotal = function(dataset) {
         var total = 0;
-        if (that.hasCumulativeValues) {
+        if (hasCumulativeData) {
           total = dataset[dataset.length - 1];
         } else {
           total = that.datasetSum(dataset);
@@ -2818,7 +2818,7 @@
         return total;
       };
 
-      that.datasetSum = function(dataset) {
+      this.datasetSum = function(dataset) {
         var sum = 0;
         for( var i = 0; i < dataset.length; i++ ){
           sum += parseInt( dataset[i], 10 );
@@ -2826,8 +2826,8 @@
         return sum;
       };
 
-      that.datasetAverage = function(dataset) {
-        var sum = that.datasetSum(dataset);
+      this.datasetAverage = function(dataset) {
+        var sum = datasetSum(dataset);
         var average = 0;
 
         if (dataset.length !== 0) {
@@ -2837,8 +2837,8 @@
         return average;
       };
 
-      that.changeToPreviousPeriod = function(dataset, previousPeriod) {
-        var average = that.datasetAverage(dataset);
+      this.changeToPreviousPeriod = function(dataset, previousPeriod) {
+        var average = datasetAverage(dataset);
         var ratio = ((average/previousPeriod)-1);
         return ratio;
       };
@@ -2862,7 +2862,6 @@
 			helpers.each(data.datasets,function(dataset){
 
 				var datasetObject = {
-          previousPeriodData: data.previousPeriodData || null,
 					label : dataset.label || null,
 					fillColor : dataset.fillColor,
 					strokeColor : dataset.strokeColor,
