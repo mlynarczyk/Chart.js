@@ -2846,6 +2846,16 @@
         return ratio;
       };
 
+      this.resolveRatioKlass = function(ratio) {
+        var klass = 'ratio--positive';
+
+        if (ratio < 0) {
+          klass = 'ratio--negative'
+        }
+
+        return klass;
+      };
+
 			//Set up tooltip events on the chart
 			if (this.options.showTooltips){
 				helpers.bindEvents(this, this.options.tooltipEvents, function(evt){
