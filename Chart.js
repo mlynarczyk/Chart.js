@@ -2843,7 +2843,7 @@
       this.countRelativeChangeToPreviousPeriod = function(dataset, previousPeriod) {
         var average = that.datasetAverage(dataset);
         var ratio = (average/previousPeriod);
-        return ratio;
+        return ratio || 0;
       };
 
       this.resolveRatioKlass = function(ratio) {
