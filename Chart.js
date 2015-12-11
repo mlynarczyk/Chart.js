@@ -2808,6 +2808,15 @@
       this.previousPeriodData = data.previousPeriodData;
       this.datasets = [];
 
+
+      this.datasetSum = function(dataset) {
+        var sum = 0;
+        for( var i = 0; i < dataset.length; i++ ){
+          sum += parseInt( dataset[i], 10 );
+        }
+        return sum;
+      };
+
       this.datasetTotal = function(dataset) {
         var total = 0;
         if (hasCumulativeData) {
@@ -2818,16 +2827,8 @@
         return total;
       };
 
-      this.datasetSum = function(dataset) {
-        var sum = 0;
-        for( var i = 0; i < dataset.length; i++ ){
-          sum += parseInt( dataset[i], 10 );
-        }
-        return sum;
-      };
-
       this.datasetAverage = function(dataset) {
-        var sum = datasetSum(dataset);
+        var sum = that.datasetSum(dataset);
         var average = 0;
 
         if (dataset.length !== 0) {
@@ -2838,7 +2839,7 @@
       };
 
       this.changeToPreviousPeriod = function(dataset, previousPeriod) {
-        var average = datasetAverage(dataset);
+        var average = that.datasetAverage(dataset);
         var ratio = ((average/previousPeriod)-1);
         return ratio;
       };
