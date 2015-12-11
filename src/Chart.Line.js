@@ -79,19 +79,20 @@
       this.previousPeriodData = data.previousPeriodData;
       this.datasets = [];
 
-
       this.datasetSum = function(dataset) {
+        var points = dataset.points;
         var sum = 0;
-        for( var i = 0; i < dataset.length; i++ ){
-          sum += parseInt( dataset[i], 10 );
+        for( var i = 0; i < points.length; i++ ){
+          sum += parseInt( points[i].value, 10 );
         }
         return sum;
       };
 
       this.datasetTotal = function(dataset) {
+        var points = dataset.points;
         var total = 0;
-        if (hasCumulativeData) {
-          total = dataset[dataset.length - 1];
+        if (that.hasCumulativeData) {
+          total = points[points.length - 1].value;
         } else {
           total = that.datasetSum(dataset);
         }
@@ -100,16 +101,17 @@
 
       this.datasetAverage = function(dataset) {
         var sum = that.datasetSum(dataset);
+        var points = dataset.points;
         var average = 0;
 
         if (dataset.length !== 0) {
-          average = sum/dataset.length;
+          average = sum/points.length;
         }
 
         return average;
       };
 
-      this.changeToPreviousPeriod = function(dataset, previousPeriod) {
+      this.countRelativeChangeToPreviousPeriod = function(dataset, previousPeriod) {
         var average = that.datasetAverage(dataset);
         var ratio = ((average/previousPeriod)-1);
         return ratio;
