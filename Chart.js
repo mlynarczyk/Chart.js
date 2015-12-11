@@ -2803,6 +2803,7 @@
 				}
 			});
 
+      this.previousPeriodData = data.previousPeriodData;
 			this.datasets = [];
 
 			//Set up tooltip events on the chart
@@ -2824,7 +2825,7 @@
 			helpers.each(data.datasets,function(dataset){
 
 				var datasetObject = {
-          previousPeriodData: dataset.previousPeriodData || null,
+          previousPeriodData: data.previousPeriodData || null,
 					label : dataset.label || null,
 					fillColor : dataset.fillColor,
 					strokeColor : dataset.strokeColor,
