@@ -61,6 +61,7 @@
 		name: "Line",
 		defaults : defaultConfig,
 		initialize:  function(data){
+      var that = this;
 			//Declare the extension of the default point, to cater for the options passed in to the constructor
 			this.PointClass = Chart.Point.extend({
 				offsetGridLines : this.options.offsetGridLines,
@@ -74,8 +75,44 @@
 				}
 			});
 
-      this.previousPeriodData = data.previousPeriodData;
-			this.datasets = [];
+      that.hasCumulativeValues = data.hasCumulativeValues;
+      that.previousPeriodData = data.previousPeriodData;
+      that.datasets = [];
+
+      that.datasetTotal = function(dataset) {
+        var total = 0;
+        if (that.hasCumulativeValues) {
+          total = dataset[dataset.length - 1];
+        } else {
+          total = that.datasetSum(dataset);
+        }
+        return total;
+      };
+
+      that.datasetSum = function(dataset) {
+        var sum = 0;
+        for( var i = 0; i < dataset.length; i++ ){
+          sum += parseInt( dataset[i], 10 );
+        }
+        return sum;
+      };
+
+      that.datasetAverage = function(dataset) {
+        var sum = that.datasetSum(dataset);
+        var average = 0;
+
+        if (dataset.length !== 0) {
+          average = sum/dataset.length;
+        }
+
+        return average;
+      };
+
+      that.changeToPreviousPeriod = function(dataset, previousPeriod) {
+        var average = that.datasetAverage(dataset);
+        var ratio = ((average/previousPeriod)-1);
+        return ratio;
+      };
 
 			//Set up tooltip events on the chart
 			if (this.options.showTooltips){
