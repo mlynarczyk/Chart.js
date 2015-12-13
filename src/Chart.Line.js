@@ -111,16 +111,32 @@
         return average;
       };
 
-      this.countRelativeChangeToPreviousPeriod = function(dataset, previousPeriod) {
+      this.resolveRelativeChange = function(dataset, previousAverage) {
         var average = that.datasetAverage(dataset);
-        var ratio = (average/previousPeriod);
-        return ratio || 0;
+        var ratio = (average/previousAverage);
+
+        var formattedRatio = ratio;
+
+        if (ratio == Infinity) {
+          formattedRatio = '100';
+        } else if (ratio == -Infinity) {
+          formattedRatio = '-100';
+        } else if (isNaN(ratio)) {
+          formattedRatio = 0;
+        } else if ( average == 0 && previousAverage != 0 ) {
+          formattedRatio = -100;
+        } else {
+          debugger;
+          formattedRatio = Math.round(ratio*100);
+        }
+
+        return formattedRatio;
       };
 
-      this.resolveRatioKlass = function(ratio) {
+      this.resolveRatioKlass = function(formattedRatio) {
         var klass = 'ratio--positive';
 
-        if (ratio < 0) {
+        if (formattedRatio < 0) {
           klass = 'ratio--negative'
         }
 
