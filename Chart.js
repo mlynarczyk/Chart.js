@@ -2820,8 +2820,13 @@
       this.datasetTotal = function(dataset) {
         var points = dataset.points;
         var total = 0;
-        if (that.hasCumulativeData) {
-          total = points[points.length - 1].value;
+        if (that.hasCumulativeData == "true") {
+          if (typeof _ !== 'undefined') {
+            total = _.last(_.compact(_.pluck(points, 'value')))
+          } else {
+            console.warn('Chart.js version you\'re using requires lodash.js to properly count cumulative total.')
+            total = points[points.length - 1].value;
+          }
         } else {
           total = that.datasetSum(dataset);
         }

@@ -17,5 +17,7 @@
     "gulpfile.js",
     "package.json"
   ],
-  "dependencies": {}
+  "dependencies": {
+    "lodash": "~3.10.1"
+  }
 }
